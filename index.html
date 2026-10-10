@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>Calendar ?2026</title>
+ <style>
+  * {
+   box-sizng: border-box;
+  }
+  body {
+   background: black;
+   overflow: hidden;
+  }
+  span:hover {
+   transition: .15s linear all;
+   background: #080 !important;
+   color: #9ff !important;
+   box-shadow: 0 0 12px 2px white;
+  }
+  @media (orientation:portrait) {
+   body {
+    overflow: visible;
+   }
+   div {
+    width: 90% !important;
+    height: calc(95vh / 3 * 0.75) !important;
+   }
+   div > span {
+    width: 10vw !important;
+    height: 3vh !important;
+    font-size: 1.6rem !important;
+   }
+  }
+ </style>
+</head>
+<body>
+
+ <script type="text/javascript">
+  let today = [new Date().getFullYear(), new Date().getMonth(), new Date().getDate()];
+  var year = location.href.includes('?=') ? location.href.substring(location.href.indexOf('=') + 1): new Date().getFullYear(),
+  days = ('Vas,Hé,Ke,Sze,Csü,Pé,Szo').split(','),
+  months = ('jan,feb,márc,ápr,máj,júN,júL,aug,szep,okt,nov,dec').split(',');
+  document.body.innerHTML = `<div id="yea" style="color:#ffa; margin:0; text-align:center; margin-bottom:-1vh; max-height:4vh; font-size:2rem;">Y: ${year}<br><small>url.html?=2032</></div>`;
+  var bgs = ('#003,#003,#030,#030,#030,#320,#320,#320,#300,#300,#300,#003').split(',');
+  let str = '';
+  for (let m = 0; m <= 11; m++) {
+   let dlen = new Date(year, m + 1, 0).getDate();
+   str += `<div style="border:1px solid #0ff; padding:8px; margin:32px; display:inline-grid; grid-template-columns: auto auto auto auto auto auto auto; width:25%; height:calc(95vh / 6); color:#0f0; background:${bgs[m]}"><span style="display:block; text-align:center;">${months[m]}</span>`;
+   for (let d = 1; d <= dlen; d++) {
+    let delay = days[new Date(year, m, d).getDay()];
+    if (d == 1) {
+     if (delay == 'Hé') {
+      for (let i = 1; i < 7; i++) {
+       str += '<span></span>';
+      }
+     } else if(delay == 'Sze') {
+      str += '<span></span>';
+     } else if(delay == 'Csü') {
+      str += '<span></span>';
+      str += '<span></span>';
+     } else if(delay == 'Pé') {
+      str += '<span></span>';
+      str += '<span></span>';
+      str += '<span></span>';
+     } else if(delay == 'Szo') {
+      str += '<span></span>';
+      str += '<span></span>';
+      str += '<span></span>';
+      str += '<span></span>';
+     } else if(delay == 'Vas') {
+      str += '<span></span>';
+      str += '<span></span>';
+      str += '<span></span>';
+      str += '<span></span>';
+      str += '<span></span>';
+     } 
+    }
+    if (year == today[0] && m == today[1] && d == today[2]) {
+     str += `<span style="border:1px solid #060; color:#000; padding:3px; margin:3px; display:inline-flex; align-items:center; justify-content:center; width:calc(25vw / 10); height:1.8vh; font-size:.8rem; background: #0f0;">${d}. ${days[new Date(year, m, d).getDay()]}</span>`;
+    } else {
+     str += `<span style="border:1px solid #060; color:#ffab; padding:3px; margin:3px; display:inline-flex; align-items:center; justify-content:center; width:calc(25vw / 10); height:1.8vh; font-size:.8rem;">${d}. ${days[new Date(year, m, d).getDay()]}</span>`;
+    }
+
+   }
+   str += '</div>';
+  }
+  document.body.innerHTML += str;
+
+  document.body.ondblclick = () => location.reload();
+
+  document.getElementById('yea').onclick = () => {
+   let yy = prompt('Write year!', 2026);
+   if (location.href.includes('?')) {
+    let newUrl = location.href.substring(0, location.href.indexOf('?'));
+    location.href = newUrl + '?=' + yy;
+   } else {
+    location.href = location.href + '?=' + yy;
+   }
+  };
+ </script>
+
+</body>
+</html>
